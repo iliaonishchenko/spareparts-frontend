@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CarsService} from './cars.service';
+import {Component, OnInit} from '@angular/core';
+import {CarsService} from './cars.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,10 @@ import { CarsService} from './cars.service';
 export class AppComponent {
   title = 'spareshop-frontend';
 
-  constructor(private carsService: CarsService) {}
+  selectedCar: Car = {carId: {value: -1} as CarId } as Car;
+
+  constructor(private carsService: CarsService) {
+  }
 
   availableCars: Car[];
 
@@ -28,12 +31,19 @@ export class AppComponent {
   ngOnInit() {
     this.getAllCars();
   }
-}
 
+  onSelectCar(car) {
+    this.selectedCar = car;
+  }
+}
+export interface CarId {
+  value: number;
+}
 export interface Car {
-  carId: number;
+  carId: CarId;
   mark: string;
   model: string;
   year: number;
   bodyStyle: string;
+  pic: string;
 }

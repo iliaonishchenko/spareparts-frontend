@@ -5,16 +5,23 @@
   </h1>
 
   <ng-container *ngIf="isDefined(availableCars); else loading">
-    <div class="row">
+    <div class="row" *ngIf="selectedCar.carId.value === -1">
       <div *ngFor="let car of availableCars" class="col-sm-4 my-4">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{car.mark}}</h4>
+        <div class="card" (click)="onSelectCar(car)">
+          <div class="card-img">
+            <h4 class="card-title">{{car.mark}} {{car.model}}</h4>
+            <p class="card-text">{{car.year}}</p>
+            <img class="img-fluid" src={{car.pic}} alt="Alternate Text"/>
           </div>
         </div>
       </div>
     </div>
   </ng-container>
+
+  <app-details
+    *ngIf="selectedCar.carId.value !== -1"
+    [(car)]="selectedCar"></app-details>
+
 
   <ng-template #loading><p style="margin: 0 auto">Loading cars list...</p></ng-template>
 </div>
