@@ -47,3 +47,8 @@ export interface Car {
   bodyStyle: string;
   pic: string;
 }
+
+export interface Credentials {
+  email: string;
+  passwordHash: string;
+}

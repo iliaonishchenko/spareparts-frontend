@@ -3,20 +3,28 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { routing } from './app.routing';
 import { CarsService } from './cars.service';
 import { DetailsComponent } from './details/details.component';
-import {DetailsService} from './details.service';
+import { DetailsService } from './details.service';
+import { AuthComponent } from './auth/auth.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationService } from './auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DetailsComponent
+    DetailsComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    routing
   ],
-  providers: [CarsService, DetailsService],
-  bootstrap: [AppComponent]
+  providers: [CarsService, DetailsService, AuthenticationService],
+  bootstrap: [AppComponent, AuthComponent]
 })
 export class AppModule { }
