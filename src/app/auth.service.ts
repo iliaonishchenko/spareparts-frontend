@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {Credentials} from './app.component';
 import {LocalStorageService} from './localstorage.service';
 
 @Injectable({ providedIn: 'root' })
@@ -10,13 +9,13 @@ export class AuthenticationService {
   ) { }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`http://localhost:8080/login/authenticate`, { 'email': username, 'passwordHash': password })
+    return this.http.post<any>(`/api/login/authenticate`, { 'email': username, 'passwordHash': password })
       .pipe(map(user => {
         // login successful if there's a user in the response
         if (user) {
           // store user details and basic auth credentials in local storage
           // to keep user logged in between page refreshes
-          user.authdata = window.btoa(JSON.stringify(user));
+          // user.authdata = window.btoa(JSON.stringify(user));
           LocalStorageService.save('currentUser', JSON.stringify(user));
         }
         return user;

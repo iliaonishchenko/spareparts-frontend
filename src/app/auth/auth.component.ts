@@ -52,8 +52,8 @@ export class AuthComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
-          // location.reload();
+          // this.router.navigate([this.returnUrl]);
+          location.reload();
         },
         error => {
           this.error = error;

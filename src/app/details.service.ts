@@ -10,6 +10,6 @@ export class DetailsService {
 
   getDetailsByCarId(carId: CarId): Observable<Detail[]> {
     console.log('we have carId: ' + carId.value);
-    return this.http.get<Detail[]>('http://localhost:8080/details/car_id/' + carId.value);
+    return this.http.get<Detail[]>('/api/details/car_id/' + carId.value);
   }
 }
