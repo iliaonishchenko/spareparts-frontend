@@ -9,6 +9,10 @@ import {CarsService} from './cars.service';
 export class AppComponent {
   title = 'spareshop-frontend';
 
+  paymentsStageCart = true;
+  paymentStagePrepayment = false;
+  paymentStagePayment = false;
+
   selectedCar: Car = {carId: {value: -1} as CarId } as Car;
 
   constructor(private carsService: CarsService) {

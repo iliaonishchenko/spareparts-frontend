@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DetailsService } from '../details.service';
 import { Car, CarId } from '../app.component';
 import {LocalStorageService} from '../localstorage.service';
+import {CartService} from '../cart.service';
 
 @Component({
   selector: 'app-details',
@@ -30,6 +31,10 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
     console.log('car we have: ' + this.car);
     this.getDetailsByCarId(this.car.carId);
+  }
+
+  addDetailToCart(detail: Detail) {
+    CartService.addToCartLocal(detail);
   }
 }
 

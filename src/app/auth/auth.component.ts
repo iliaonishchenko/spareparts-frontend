@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../auth.service';
+import {LocalStorageService} from '../localstorage.service';
 
 @Component({
   selector: 'app-auth',
@@ -52,7 +53,7 @@ export class AuthComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          // this.router.navigate([this.returnUrl]);
+          LocalStorageService.save('currentUser', JSON.stringify(data));
           location.reload();
         },
         error => {

@@ -10,12 +10,19 @@ import { DetailsService } from './details.service';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './auth.service';
+import { CartComponent } from './cart/cart.component';
+import {CartService} from './cart.service';
+import { PrepaymentComponent } from './prepayment/prepayment.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailsComponent,
-    AuthComponent
+    AuthComponent,
+    CartComponent,
+    PrepaymentComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +31,7 @@ import { AuthenticationService } from './auth.service';
     ReactiveFormsModule,
     routing
   ],
-  providers: [CarsService, DetailsService, AuthenticationService],
-  bootstrap: [AppComponent, AuthComponent]
+  providers: [CarsService, DetailsService, AuthenticationService, CartService],
+  bootstrap: [AppComponent, AuthComponent, CartComponent, PrepaymentComponent, PaymentComponent]
 })
 export class AppModule { }
