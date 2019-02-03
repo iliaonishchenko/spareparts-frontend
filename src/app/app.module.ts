@@ -12,8 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './auth.service';
 import { CartComponent } from './cart/cart.component';
 import {CartService} from './cart.service';
-import { PrepaymentComponent } from './prepayment/prepayment.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CartInternalComponent } from './cart-internal/cart-internal.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +21,8 @@ import { PaymentComponent } from './payment/payment.component';
     DetailsComponent,
     AuthComponent,
     CartComponent,
-    PrepaymentComponent,
-    PaymentComponent
+    PaymentComponent,
+    CartInternalComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +32,6 @@ import { PaymentComponent } from './payment/payment.component';
     routing
   ],
   providers: [CarsService, DetailsService, AuthenticationService, CartService],
-  bootstrap: [AppComponent, AuthComponent, CartComponent, PrepaymentComponent, PaymentComponent]
+  bootstrap: [AppComponent, AuthComponent, CartComponent]
 })
 export class AppModule { }

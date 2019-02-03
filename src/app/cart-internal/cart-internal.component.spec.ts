@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrepaymentComponent } from './prepayment.component';
+import { CartInternalComponent } from './cart-internal.component';
 
-describe('PrepaymentComponent', () => {
-  let component: PrepaymentComponent;
-  let fixture: ComponentFixture<PrepaymentComponent>;
+describe('CartInternalComponent', () => {
+  let component: CartInternalComponent;
+  let fixture: ComponentFixture<CartInternalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrepaymentComponent ]
+      declarations: [ CartInternalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrepaymentComponent);
+    fixture = TestBed.createComponent(CartInternalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

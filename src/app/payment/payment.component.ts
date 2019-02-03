@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-payment',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
 
+  @Output() enterCartStage = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit() {
+  }
+
+  enterCartStageFunc(): void {
+    this.enterCartStage.emit(true);
   }
 
 }

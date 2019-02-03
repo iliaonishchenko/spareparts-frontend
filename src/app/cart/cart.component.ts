@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {CartService} from '../cart.service';
-import {Detail} from '../details/details.component';
 
 @Component({
   selector: 'app-cart',
@@ -11,27 +9,24 @@ export class CartComponent implements OnInit {
 
   constructor() { }
 
-  isNext: Boolean = false;
+  cartStage: Boolean = true;
+  paymentStage: Boolean = false;
 
   ngOnInit() {
-    this.isNext = false;
+    this.cartStage = true;
+    this.paymentStage = false;
   }
 
-  isCartEmpty(): Boolean {
-    const details: Detail[] = CartService.getGoodsFromLocalCart();
-    const isEmpty: Boolean = (details === undefined || details === null || details.length === 0 );
-    return isEmpty;
+  enterCartStage(): void {
+    this.cartStage = true;
+    this.paymentStage = false;
   }
 
-  getCartContent(): Detail[] {
-    return CartService.getGoodsFromLocalCart();
+  enterPaymentStage(): void {
+    this.cartStage = false;
+    this.paymentStage = false;
   }
 
-  removeFromCart(detail: Detail): Boolean {
-    return CartService.removeFromCartLocal(detail);
-  }
-
-  doNext(): void {
-    this.isNext = true;
-  }
+  isCartStage(): Boolean { return this.cartStage; }
+  isPaymentStage(): Boolean { return this.paymentStage; }
 }
