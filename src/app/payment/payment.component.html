@@ -5,31 +5,17 @@
   </button>
 </div>
 <div class="modal-body">
-  <div style="text-align:center">
-    <h3>
-      Введите данные карты:
-    </h3>
-<!---->
-    <ng-container *ngIf="!isCartEmpty() && !isNext; else emptyCart">
-      <div class="row" *ngIf="!isCartEmpty()">
-        <div *ngFor="let detail of getCartContent()" class="col-sm-4 my-4">
-          <div class="card">
-            <div class="card-img">
-              <h4 class="card-title">{{detail.name}} -- {{detail.price}}</h4>
-              <div class="card-text">
-                <p>Описание: {{detail.info}}</p>
-                <p>Поставщик: {{detail.supplierId}}</p>
-                <p>Год: {{detail.year}}</p>
-              </div>
-              <a href="#" role="button" class="btn btn-secondary popover-test" title="Убрать из корзины"
-                 data-content="Popover body content is set in this attribute." (click)="removeFromCart(detail)">Убрать из корзины</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a href="#" role="button" class="btn btn-secondary popover-test" title="Далее"
-         data-content="Popover body content is set in this attribute." (click)="doNext()">Далее</a>
-    </ng-container>
+  <form class="text-center border border-light p-5" (submit)="doPayment()">
+    <p class="h3 mb-3">Введите данные карты:</p>
+    <input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>
+    <input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">
+    <input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">
+    <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
+    Вы собираетесь оплатить {{totalSum()}} рублей.
+    <button class="my-4" type="submit">Оплатить</button>
+  </form>
+      <!--<a href="#" role="button" class="btn btn-secondary popover-test" title="Далее"-->
+         <!--data-content="Popover body content is set in this attribute." (click)="doPayment()">Оплатить</a>-->
     <!--<h5>Popover in a modal</h5>-->
     <!--<p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>-->
     <!--<hr>-->
@@ -38,6 +24,6 @@
     <!--<app-prepayment *ngIf="isNext"></app-prepayment>-->
 <!---->
 <!---->
-    <ng-template #emptyCart><p style="margin: 0 auto"><p>Вы ещё ничего не добавили в корзину</p></ng-template>
-  </div>
+    <!--<ng-template #emptyCart><p style="margin: 0 auto"><p>Вы ещё ничего не добавили в корзину</p></ng-template>-->
+  <!--</div>-->
 </div>

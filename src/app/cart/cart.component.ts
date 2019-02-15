@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
 
   enterPaymentStage(): void {
     this.cartStage = false;
-    this.paymentStage = false;
+    this.paymentStage = true;
   }
 
   isCartStage(): Boolean { return this.cartStage; }

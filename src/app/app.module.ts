@@ -14,6 +14,7 @@ import { CartComponent } from './cart/cart.component';
 import {CartService} from './cart.service';
 import { PaymentComponent } from './payment/payment.component';
 import { CartInternalComponent } from './cart-internal/cart-internal.component';
+import {OrdersService} from './orders.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { CartInternalComponent } from './cart-internal/cart-internal.component';
     ReactiveFormsModule,
     routing
   ],
-  providers: [CarsService, DetailsService, AuthenticationService, CartService],
+  providers: [CarsService, DetailsService, AuthenticationService, CartService, OrdersService, PaymentsService],
   bootstrap: [AppComponent, AuthComponent, CartComponent]
 })
 export class AppModule { }

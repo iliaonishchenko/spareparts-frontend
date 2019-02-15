@@ -12,4 +12,13 @@ export class DetailsService {
     console.log('we have carId: ' + carId.value);
     return this.http.get<Detail[]>('/api/details/car_id/' + carId.value);
   }
+
+  createDetailsBin(detailsId: DetailId[]): Observable<DetailBin> {
+    return this.http.post<DetailBin>('/api/bins/', detailsId);
+  }
+}
+
+export interface DetailBin {
+  detailsBinId: number;
+  detailIds: number[];
 }
