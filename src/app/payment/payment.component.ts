@@ -2,8 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CartService } from '../cart.service';
 import { FormControl } from '@angular/forms';
 import {DetailsService} from '../details.service';
-import {Order, OrdersService} from '../orders.service';
+import {Client, ClientId, Order, OrdersService} from '../orders.service';
 import {Payment, PaymentsService} from '../payment.service';
+import {LocalStorageService} from '../localstorage.service';
 
 @Component({
   selector: 'app-payment',
@@ -36,11 +37,14 @@ export class PaymentComponent implements OnInit {
   }
 
   doPayment(): void {
+    const currClient: Client = JSON.parse(LocalStorageService.get('currentUser')) as Client;
     console.log('processing payment with card number: ' + this.cardNumber.value);
     const detailIds = CartService.getGoodsFromLocalCart().map(detail => detail.detailId);
     this.dService.createDetailsBin(detailIds).subscribe(bin => {
-      this.oService.createOrder(new Order(1, 1, bin.detailsBinId, 1111, 'card')).subscribe(order => {
-        this.pService.createPayment(new Payment(1, order.orderId, true, 'No msg')).subscribe(payment => {
+      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, 1111, {'Online': ''})).subscribe(order => {
+        const currPayment = new Payment(order.orderId, true, 'No msg');
+        console.log('we created payment ' + JSON.stringify(currPayment));
+        this.pService.createPayment(currPayment).subscribe(payment => {
           console.log('we`ve created payment: ' + payment.toString());
         });
       });

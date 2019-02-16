@@ -15,6 +15,7 @@ import {CartService} from './cart.service';
 import { PaymentComponent } from './payment/payment.component';
 import { CartInternalComponent } from './cart-internal/cart-internal.component';
 import {OrdersService} from './orders.service';
+import {PaymentsService} from './payment.service';
 
 @NgModule({
   declarations: [

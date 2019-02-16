@@ -31,7 +31,7 @@ export class AuthComponent implements OnInit {
     });
 
     // reset login status
-    this.authenticationService.logout();
+    // this.authenticationService.logout();
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'http://localhost:4200/';
@@ -53,7 +53,7 @@ export class AuthComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          LocalStorageService.save('currentUser', JSON.stringify(data));
+          // LocalStorageService.save('currentUser', JSON.stringify(data));
           location.reload();
         },
         error => {

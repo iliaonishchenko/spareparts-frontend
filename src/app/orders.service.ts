@@ -12,17 +12,38 @@ export class OrdersService {
 }
 
 export class Order {
-  orderId: number;
-  clientId: number;
+  orderId: OrderId;
+  clientId: ClientId;
   detailsBinId: number;
   currentDate: number;
-  paymentType: string;
+  paymentType: any;
 
-  constructor(orderId: number, clientId: number, detailsBinId: number, currentDate: number, paymentType: string) {
-    this.orderId = orderId;
+  constructor(clientId: ClientId, detailsBinId: number, currentDate: number, paymentType: any) {
     this.clientId = clientId;
     this.detailsBinId = detailsBinId;
     this.currentDate = currentDate;
     this.paymentType = paymentType;
   }
+}
+
+export class OrderId {
+  value: number;
+  constructor(value: number) {
+    this.value = value;
+  }
+}
+
+export class ClientId {
+  value: number;
+  constructor(value: number) {
+    this.value = value;
+  }
+}
+
+export class Client {
+  clientId: ClientId;
+  name: string;
+  surname: string;
+  email: string;
+  isAdmin: Boolean;
 }

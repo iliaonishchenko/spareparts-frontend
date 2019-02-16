@@ -14,11 +14,14 @@ export class DetailsService {
   }
 
   createDetailsBin(detailsId: DetailId[]): Observable<DetailBin> {
-    return this.http.post<DetailBin>('/api/bins/', detailsId);
+    return this.http.post<DetailBin>('/api/bins', new DetailBin(detailsId));
   }
 }
 
-export interface DetailBin {
-  detailsBinId: number;
-  detailIds: number[];
+export class DetailBin {
+  detailsBinId?: number;
+  detailIds: DetailId[];
+  constructor(detailIds: DetailId[]) {
+    this.detailIds = detailIds;
+  }
 }
