@@ -13,6 +13,9 @@
     <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
     Вы собираетесь оплатить {{totalSum()}} рублей.
     <button class="my-4" type="submit">Оплатить</button>
+    <div *ngIf="paymentDone">
+      <button class="my-4" type="reset">Оплачено</button>
+    </div>
   </form>
       <!--<a href="#" role="button" class="btn btn-secondary popover-test" title="Далее"-->
          <!--data-content="Popover body content is set in this attribute." (click)="doPayment()">Оплатить</a>-->

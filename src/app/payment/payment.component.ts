@@ -18,6 +18,9 @@ export class PaymentComponent implements OnInit {
   cardholder;
   expirationDate;
   cvc;
+
+  paymentDone = false;
+
   constructor(private dService: DetailsService,
               private oService: OrdersService,
               private pService: PaymentsService) { }
@@ -41,7 +44,7 @@ export class PaymentComponent implements OnInit {
     console.log('processing payment with card number: ' + this.cardNumber.value);
     const detailIds = CartService.getGoodsFromLocalCart().map(detail => detail.detailId);
     this.dService.createDetailsBin(detailIds).subscribe(bin => {
-      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, 1111, {'Online': ''})).subscribe(order => {
+      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, new Date().getTime(), {'Online': ''})).subscribe(order => {
         const currPayment = new Payment(order.orderId, true, 'No msg');
         console.log('we created payment ' + JSON.stringify(currPayment));
         this.pService.createPayment(currPayment).subscribe(payment => {
@@ -49,7 +52,8 @@ export class PaymentComponent implements OnInit {
         });
       });
     });
-
+    this.paymentDone = true;
+    // location.reload();
   }
 
 }

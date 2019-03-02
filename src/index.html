@@ -36,8 +36,8 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Корзина</a>
+            <li class="nav-item" data-toggle="modal" data-target="#ordersModal">
+              <a class="nav-link" href="#">Заказы</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">О магазине</a>
@@ -75,6 +75,22 @@
 
     <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
       <app-cart>{{"Something2"}}</app-cart>
+    </div>
+
+    <div class="modal fade" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ordersModalLabel">Обработанные заказы</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <app-orders>{{"Something"}}</app-orders>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Header with Background Image -->

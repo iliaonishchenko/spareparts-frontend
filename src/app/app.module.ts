@@ -16,6 +16,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CartInternalComponent } from './cart-internal/cart-internal.component';
 import {OrdersService} from './orders.service';
 import {PaymentsService} from './payment.service';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {PaymentsService} from './payment.service';
     AuthComponent,
     CartComponent,
     PaymentComponent,
-    CartInternalComponent
+    CartInternalComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +36,6 @@ import {PaymentsService} from './payment.service';
     routing
   ],
   providers: [CarsService, DetailsService, AuthenticationService, CartService, OrdersService, PaymentsService],
-  bootstrap: [AppComponent, AuthComponent, CartComponent]
+  bootstrap: [AppComponent, AuthComponent, CartComponent, OrdersComponent]
 })
 export class AppModule { }

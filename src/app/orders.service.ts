@@ -9,6 +9,10 @@ export class OrdersService {
   createOrder(order: Order): Observable<Order> {
     return this.http.post<Order>('/api/orders', order);
   }
+
+  getOrders(clientId: ClientId): Observable<Order[]> {
+    return this.http.get<Order[]>('/api/orders/client_id/' + clientId.value);
+  }
 }
 
 export class Order {
