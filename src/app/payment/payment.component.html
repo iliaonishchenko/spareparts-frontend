@@ -1,32 +1,59 @@
-<div class="modal-header">
-  <h5 class="modal-title" id="cartModalLabel">Платеж</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form class="text-center border border-light p-5" (submit)="doPayment()">
-    <p class="h3 mb-3">Введите данные карты:</p>
-    <input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>
-    <input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">
-    <input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">
-    <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
-    Вы собираетесь оплатить {{totalSum()}} рублей.
-    <button class="my-4" type="submit">Оплатить</button>
-    <div *ngIf="paymentDone">
-      <button class="my-4" type="reset">Оплачено</button>
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="cartModalLabel">Платеж</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Оплата онлайн</a></li>
+        <li><a href="#tab2" data-toggle="tab">   Оплата курьеру</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <form class="text-center border border-light p-5" (submit)="doPayment()">
+            <p class="h3 mb-3">Введите данные карты:</p>
+            <input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>
+            <input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">
+            <input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">
+            <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
+            Вы собираетесь оплатить {{totalSum()}} рублей.
+            <button class="my-4" type="submit">Оплатить</button>
+            <div *ngIf="paymentDone">
+              <button class="my-4" type="reset">Оплачено</button>
+            </div>
+          </form>
+          <div class="tab-pane" id="tab2">
+            Вы собираетесь оплатить {{totalSum()}} рублей.<br>
+            Заказ будет передан в доставку в ближайшее время. <br>
+            Оплата возможна наличными или картой курьеру. <br>
+            После нажатия на кнопку вам на почту будет отправлено письмо с подтверждением заказа. <br>
+            <button class="my-4" type="submit" (click)="sendMail()">Купить офлайн</button>
+          </div>
+        </div>
+          <!--<form [formGroup]="addresGroup" (ngSubmit)="onSubmit()">-->
+            <!--<div class="form-group">-->
+              <!--<label for="username">Username</label>-->
+              <!--<input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />-->
+              <!--<div *ngIf="submitted && f.username.errors" class="invalid-feedback">-->
+                <!--<div *ngIf="f.username.errors.required">Username is required</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label for="password">Password</label>-->
+              <!--<input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />-->
+              <!--<div *ngIf="submitted && f.password.errors" class="invalid-feedback">-->
+                <!--<div *ngIf="f.password.errors.required">Password is required</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<button [disabled]="loading" class="btn btn-primary">Login</button>-->
+              <!--<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />-->
+            <!--</div>-->
+            <!--<div *ngIf="error" class="alert alert-danger">{{error}}</div>-->
+          <!--</form>-->
+        </div>
+      </div>
     </div>
-  </form>
-      <!--<a href="#" role="button" class="btn btn-secondary popover-test" title="Далее"-->
-         <!--data-content="Popover body content is set in this attribute." (click)="doPayment()">Оплатить</a>-->
-    <!--<h5>Popover in a modal</h5>-->
-    <!--<p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>-->
-    <!--<hr>-->
-    <!--<h5>Tooltips in a modal</h5>-->
-    <!--<p><a href="#" class="tooltip-test" title="Tooltip">This link</a> and <a href="#" class="tooltip-test" title="Tooltip">that link</a> have tooltips on hover.</p>-->
-    <!--<app-prepayment *ngIf="isNext"></app-prepayment>-->
-<!---->
-<!---->
-    <!--<ng-template #emptyCart><p style="margin: 0 auto"><p>Вы ещё ничего не добавили в корзину</p></ng-template>-->
-  <!--</div>-->
-</div>

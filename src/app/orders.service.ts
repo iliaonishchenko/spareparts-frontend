@@ -13,6 +13,20 @@ export class OrdersService {
   getOrders(clientId: ClientId): Observable<Order[]> {
     return this.http.get<Order[]>('/api/orders/client_id/' + clientId.value);
   }
+
+  sendMail(localOrder: LocalOrder): Observable<LocalOrder> {
+    return this.http.post<LocalOrder>('/api/mails', localOrder);
+  }
+}
+
+export class LocalOrder {
+  client: Client;
+  text: string;
+
+  constructor(client: Client, text: string) {
+    this.client = client;
+    this.text = text;
+  }
 }
 
 export class Order {

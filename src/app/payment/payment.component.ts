@@ -2,9 +2,10 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CartService } from '../cart.service';
 import { FormControl } from '@angular/forms';
 import {DetailsService} from '../details.service';
-import {Client, ClientId, Order, OrdersService} from '../orders.service';
+import {Client, ClientId, LocalOrder, Order, OrdersService} from '../orders.service';
 import {Payment, PaymentsService} from '../payment.service';
 import {LocalStorageService} from '../localstorage.service';
+import {Detail} from '../details/details.component';
 
 @Component({
   selector: 'app-payment',
@@ -20,6 +21,16 @@ export class PaymentComponent implements OnInit {
   cvc;
 
   paymentDone = false;
+
+  private static composeTextMessage(client: Client, details: Detail[]): string {
+    const detailsString = details.map(detail => `${detail.name} (${detail.year}): ${detail.price}`).join('\n');
+    return `Здравствуйте, ${client.name}!\
+    \n Вы оформили заказ в магазине SpareShop!\
+    \n Ваш заказ включает в себя следующие товары:\
+    \n ${detailsString}\
+    \n Служба доставки свяжется с вами в день доставки. \
+    \n Спасибо за заказ на нашем сайте`;
+  }
 
   constructor(private dService: DetailsService,
               private oService: OrdersService,
@@ -56,4 +67,12 @@ export class PaymentComponent implements OnInit {
     // location.reload();
   }
 
+  sendMail(): void {
+    const details: Detail[] = CartService.getGoodsFromLocalCart();
+    const currClient: Client = JSON.parse(LocalStorageService.get('currentUser')) as Client;
+    const mailText: string = PaymentComponent.composeTextMessage(currClient, details);
+    console.log('we have the following text: ' + mailText);
+
+    this.oService.sendMail(new LocalOrder(currClient, mailText));
+  }
 }
