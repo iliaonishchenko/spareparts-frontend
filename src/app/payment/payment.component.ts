@@ -60,11 +60,12 @@ export class PaymentComponent implements OnInit {
         console.log('we created payment ' + JSON.stringify(currPayment));
         this.pService.createPayment(currPayment).subscribe(payment => {
           console.log('we`ve created payment: ' + payment.toString());
+          CartService.cleanCart();
         });
       });
     });
     this.paymentDone = true;
-    // location.reload();
+    location.reload();
   }
 
   sendMail(): void {
@@ -73,6 +74,20 @@ export class PaymentComponent implements OnInit {
     const mailText: string = PaymentComponent.composeTextMessage(currClient, details);
     console.log('we have the following text: ' + mailText);
 
-    this.oService.sendMail(new LocalOrder(currClient, mailText));
+    const detailIds = CartService.getGoodsFromLocalCart().map(detail => detail.detailId);
+    this.dService.createDetailsBin(detailIds).subscribe(bin => {
+      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, new Date().getTime(), {'Online': ''})).subscribe(order => {
+        const currPayment = new Payment(order.orderId, true, 'No msg');
+        console.log('we created payment ' + JSON.stringify(currPayment));
+        this.pService.createPayment(currPayment).subscribe(payment => {
+          console.log('we`ve created payment: ' + payment.toString());
+          this.oService.sendMail(new LocalOrder(currClient, mailText)).subscribe(rLocalOrder => {
+            console.log('we got answer from server: ' + rLocalOrder);
+            CartService.cleanCart();
+            location.reload();
+          });
+        });
+      });
+    });
   }
 }

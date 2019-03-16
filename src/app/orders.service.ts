@@ -64,4 +64,12 @@ export class Client {
   surname: string;
   email: string;
   isAdmin: Boolean;
+
+  constructor(clientId: ClientId, name: string, surname: string, email: string, isAdmin: boolean) {
+    this.clientId = clientId;
+    this.name = name;
+    this.surname = surname;
+    this.email = email;
+    this.isAdmin = isAdmin;
+  }
 }

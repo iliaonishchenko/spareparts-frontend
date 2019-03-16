@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {LocalStorageService} from './localstorage.service';
 import {Client} from './orders.service';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  constructor(private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
     return this.http.post<Client>(`/api/login/authenticate`, { 'email': username, 'passwordHash': password })
@@ -25,10 +25,28 @@ export class AuthenticationService {
       }));
   }
 
+  createClient(client: Client): Observable<Client> {
+    return this.http.post<Client>('/api/clients', client);
+  }
+
+  createCredentials(cred: Credentials): Observable<Credentials> {
+    return this.http.post<Credentials>('/api/credentials', cred);
+  }
+
   logout() {
     // remove user from local storage to log user out
     // localStorage.removeItem('currentUser');
     LocalStorageService.remove('currentUser');
+  }
+}
+
+export class Credentials {
+  email: string;
+  passwordHash: string;
+
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.passwordHash = password;
   }
 }
 

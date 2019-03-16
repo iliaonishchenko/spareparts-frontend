@@ -1,0 +1,17 @@
+<div>
+  <form class="text-center border border-light p-5" (submit)="doRegistration()">
+    <p class="h3 mb-3">Введите данные:</p>
+    Имя:
+    <input type="text" [formControl]="name" class="form-control mb-4" placeholder="Иван"/>
+    Фамилия:
+    <input type="text" [formControl]="surname" class="form-control mb-4" placeholder="Иванов">
+    Адрес электронной почты:
+    <input type="text" [formControl]="email" class="form-control mb-4" placeholder="ivan@ivanov.com">
+    Пароль:
+    <input type="password" [formControl]="password" class="form-control mb-4">
+    <button class="my-4" type="submit">Зарегестрироваться</button>
+    <div *ngIf="registrationDone">
+      <button class="my-4" type="reset">Вы зарегестрировались! Пожалуйста, авторизуйтиесь</button>
+    </div>
+  </form>
+</div>
