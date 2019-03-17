@@ -1,39 +1,101 @@
+<!--<div class="modal" id="cartModalLabel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+  <!--<div class="modal-dialog">-->
+    <!--<div class="modal-content">-->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
 
-  <div class="modal-header">
-    <h5 class="modal-title" id="cartModalLabel">Платеж</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="tabbable"> <!-- Only required for left/right tabs -->
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Оплата онлайн</a></li>
-        <li><a href="#tab2" data-toggle="tab">   Оплата курьеру</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-          <form class="text-center border border-light p-5" (submit)="doPayment()">
-            <p class="h3 mb-3">Введите данные карты:</p>
-            <input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>
-            <input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">
-            <input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">
-            <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
-            Вы собираетесь оплатить {{totalSum()}} рублей.
-            <button class="my-4" type="submit">Оплатить</button>
-            <div *ngIf="paymentDone">
-              <button class="my-4" type="reset">Оплачено</button>
+      </div>
+      <div class="modal-body">
+        <div role="tabpanel">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#uploadTab" aria-controls="uploadTab" role="tab" data-toggle="tab">Оплата онлайн</a>
+
+            </li>
+            <li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab" data-toggle="tab">Оплата курьеру</a>
+
+            </li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="uploadTab">
+
+
+
+              <form class="text-center border border-light p-5" (submit)="doPayment()">
+                <p class="h3 mb-3">Введите данные карты:</p>
+                <input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>
+                <input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">
+                <input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">
+                <input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">
+                Вы собираетесь оплатить {{totalSum()}} рублей.
+                <button class="my-4" type="submit">Оплатить</button>
+                <div *ngIf="paymentDone">
+                  <button class="my-4" type="reset">Оплачено</button>
+                </div>
+              </form>
+
+
+
             </div>
-          </form>
-          <div class="tab-pane" id="tab2">
-            Вы собираетесь оплатить {{totalSum()}} рублей.<br>
-            Заказ будет передан в доставку в ближайшее время. <br>
-            Оплата возможна наличными или картой курьеру. <br>
-            После нажатия на кнопку вам на почту будет отправлено письмо с подтверждением заказа. <br>
-            <button class="my-4" type="submit" (click)="sendMail()">Купить офлайн</button>
+            <div role="tabpanel" class="tab-pane" id="browseTab">
+
+              <div class="tab-pane" id="tab2">
+                Вы собираетесь оплатить {{totalSum()}} рублей.<br>
+                Заказ будет передан в доставку в ближайшее время. <br>
+                Оплата возможна наличными или картой курьеру. <br>
+                После нажатия на кнопку вам на почту будет отправлено письмо с подтверждением заказа. <br>
+                <button class="my-4" type="submit" (click)="sendMail()">Купить офлайн</button>
+              </div>
+
+
+            </div>
           </div>
         </div>
-          <!--<form [formGroup]="addresGroup" (ngSubmit)="onSubmit()">-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save">Save changes</button>
+      </div>
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+  <!--<div class="modal-header">-->
+    <!--<h5 class="modal-title" id="cartModalLabel">Платеж</h5>-->
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+      <!--<span aria-hidden="true">&times;</span>-->
+    <!--</button>-->
+  <!--</div>-->
+  <!--<div class="modal-body">-->
+    <!--<div class="tabbable"> &lt;!&ndash; Only required for left/right tabs &ndash;&gt;-->
+      <!--<ul class="nav nav-tabs" role="tablist">-->
+        <!--<li class="active" role="tab" data-toggle="tab"><a href="#tab1" data-toggle="tab">Оплата онлайн</a></li>-->
+        <!--<li><a href="#tab2" data-toggle="tab" role="tab">Оплата курьеру</a></li>-->
+      <!--</ul>-->
+      <!--<div class="tab-content">-->
+        <!--<div class="tab-pane active" id="tab1">-->
+          <!--<form class="text-center border border-light p-5" (submit)="doPayment()">-->
+            <!--<p class="h3 mb-3">Введите данные карты:</p>-->
+            <!--<input type="number" [formControl]="cardNumber" class="form-control mb-4" placeholder="123456789"/>-->
+            <!--<input type="text" [formControl]="cardholder" class="form-control mb-4" placeholder="Владелец карты">-->
+            <!--<input type="number" [formControl]="expirationDate" class="form-control mb-4" placeholder="Окончание действия">-->
+            <!--<input type="cvc" [formControl]="cvc" class="form-control mb-4" placeholder="cvc">-->
+            <!--Вы собираетесь оплатить {{totalSum()}} рублей.-->
+            <!--<button class="my-4" type="submit">Оплатить</button>-->
+            <!--<div *ngIf="paymentDone">-->
+              <!--<button class="my-4" type="reset">Оплачено</button>-->
+            <!--</div>-->
+          <!--</form>-->
+          <!--<div class="tab-pane" id="tab2">-->
+            <!--Вы собираетесь оплатить {{totalSum()}} рублей.<br>-->
+            <!--Заказ будет передан в доставку в ближайшее время. <br>-->
+            <!--Оплата возможна наличными или картой курьеру. <br>-->
+            <!--После нажатия на кнопку вам на почту будет отправлено письмо с подтверждением заказа. <br>-->
+            <!--<button class="my-4" type="submit" (click)="sendMail()">Купить офлайн</button>-->
+          <!--</div>-->
+        <!--</div>-->
+          <!--&lt;!&ndash;<form [formGroup]="addresGroup" (ngSubmit)="onSubmit()">&ndash;&gt;-->
             <!--<div class="form-group">-->
               <!--<label for="username">Username</label>-->
               <!--<input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />-->
@@ -54,6 +116,6 @@
             <!--</div>-->
             <!--<div *ngIf="error" class="alert alert-danger">{{error}}</div>-->
           <!--</form>-->
-        </div>
-      </div>
-    </div>
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
