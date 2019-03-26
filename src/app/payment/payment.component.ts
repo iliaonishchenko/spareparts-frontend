@@ -61,11 +61,11 @@ export class PaymentComponent implements OnInit {
         this.pService.createPayment(currPayment).subscribe(payment => {
           console.log('we`ve created payment: ' + payment.toString());
           CartService.cleanCart();
+          this.paymentDone = true;
+          location.reload();
         });
       });
     });
-    this.paymentDone = true;
-    location.reload();
   }
 
   sendMail(): void {
