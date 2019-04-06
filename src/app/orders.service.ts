@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {DetailBin, DetailBinId} from './details.service';
 
 @Injectable()
 export class OrdersService {
@@ -17,6 +18,10 @@ export class OrdersService {
   sendMail(localOrder: LocalOrder): Observable<LocalOrder> {
     return this.http.post<LocalOrder>('/api/mails', localOrder);
   }
+
+  getDetailBin(detailBinId: number): Observable<DetailBin> {
+    return this.http.get<DetailBin>('/api/bins/' + detailBinId);
+  }
 }
 
 export class LocalOrder {
@@ -32,13 +37,13 @@ export class LocalOrder {
 export class Order {
   orderId: OrderId;
   clientId: ClientId;
-  detailsBinId: number;
+  detailsBinId: DetailBinId;
   currentDate: number;
   paymentType: any;
 
   constructor(clientId: ClientId, detailsBinId: number, currentDate: number, paymentType: any) {
     this.clientId = clientId;
-    this.detailsBinId = detailsBinId;
+    this.detailsBinId = new DetailBinId(detailsBinId);
     this.currentDate = currentDate;
     this.paymentType = paymentType;
   }

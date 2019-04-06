@@ -10,16 +10,17 @@
       Вы добавили в корзину следующие детали:
     </h3>
 
-    <ng-container *ngIf="!isCartEmpty() && !isNext; else emptyCart">
+    <ng-container *ngIf="!isCartEmpty(); else emptyCart">
       <div class="row" *ngIf="!isCartEmpty()">
         <div *ngFor="let detail of getCartContent()" class="col-sm-4 my-4">
           <div class="card">
             <div class="card-img">
-              <h4 class="card-title">{{detail.name}} -- {{detail.price}}</h4>
+              <h4 class="card-title">{{detail.name}}</h4>
               <div class="card-text">
                 <p>Описание: {{detail.info}}</p>
-                <p>Поставщик: {{detail.supplierId}}</p>
+                <!--<p>Поставщик: {{(getSupplierById(detail.supplierId) | async).name}}</p>-->
                 <p>Год: {{detail.year}}</p>
+                <p>Цена: {{detail.price}}</p>
               </div>
               <a href="#" role="button" class="btn btn-secondary popover-test" title="Убрать из корзины"
                  data-content="Popover body content is set in this attribute." (click)="removeFromCart(detail)">Убрать из корзины</a>

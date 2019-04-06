@@ -16,12 +16,48 @@ export class DetailsService {
   createDetailsBin(detailsId: DetailId[]): Observable<DetailBin> {
     return this.http.post<DetailBin>('/api/bins', new DetailBin(detailsId));
   }
+
+  getSupplierById(supplierId: SupplierId): Observable<Supplier> {
+    return this.http.get<Supplier>('/api/suppliers/' + supplierId.value);
+  }
+
+  getDetailById(detailId: DetailId): Observable<Detail> {
+    return this.http.get<Detail>('/api/details/' + detailId.value);
+  }
+}
+
+export class DetailBinId {
+  value: number;
+  constructor(value: number) {
+    this.value = value;
+  }
 }
 
 export class DetailBin {
-  detailsBinId?: number;
+  detailsBinId?: DetailBinId;
   detailIds: DetailId[];
   constructor(detailIds: DetailId[]) {
     this.detailIds = detailIds;
+  }
+}
+
+export class SupplierId {
+  value: number;
+  constructor(value: number) {
+    this.value = value;
+  }
+}
+export class Supplier {
+  supplierId: SupplierId;
+  name: string;
+  account: number;
+  address: string;
+  link: String;
+  constructor(supplierId: SupplierId, name: string, account: number, address: string, link: string) {
+    this.supplierId = supplierId;
+    this.name = name;
+    this.account = account;
+    this.address = address;
+    this.link = link;
   }
 }

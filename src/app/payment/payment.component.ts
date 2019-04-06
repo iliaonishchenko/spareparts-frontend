@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CartService } from '../cart.service';
 import { FormControl } from '@angular/forms';
-import {DetailsService} from '../details.service';
+import {DetailBinId, DetailsService} from '../details.service';
 import {Client, ClientId, LocalOrder, Order, OrdersService} from '../orders.service';
 import {Payment, PaymentsService} from '../payment.service';
 import {LocalStorageService} from '../localstorage.service';
@@ -55,16 +55,17 @@ export class PaymentComponent implements OnInit {
     console.log('processing payment with card number: ' + this.cardNumber.value);
     const detailIds = CartService.getGoodsFromLocalCart().map(detail => detail.detailId);
     this.dService.createDetailsBin(detailIds).subscribe(bin => {
-      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, new Date().getTime(), {'Online': ''})).subscribe(order => {
-        const currPayment = new Payment(order.orderId, true, 'No msg');
-        console.log('we created payment ' + JSON.stringify(currPayment));
-        this.pService.createPayment(currPayment).subscribe(payment => {
-          console.log('we`ve created payment: ' + payment.toString());
-          CartService.cleanCart();
-          this.paymentDone = true;
-          location.reload();
+      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId.value, new Date().getTime(), {'Online': ''}))
+        .subscribe(order => {
+          const currPayment = new Payment(order.orderId, true, 'No msg');
+          console.log('we created payment ' + JSON.stringify(currPayment));
+          this.pService.createPayment(currPayment).subscribe(payment => {
+            console.log('we`ve created payment: ' + payment.toString());
+            CartService.cleanCart();
+            this.paymentDone = true;
+            location.reload();
+          });
         });
-      });
     });
   }
 
@@ -76,18 +77,19 @@ export class PaymentComponent implements OnInit {
 
     const detailIds = CartService.getGoodsFromLocalCart().map(detail => detail.detailId);
     this.dService.createDetailsBin(detailIds).subscribe(bin => {
-      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId, new Date().getTime(), {'Online': ''})).subscribe(order => {
-        const currPayment = new Payment(order.orderId, true, 'No msg');
-        console.log('we created payment ' + JSON.stringify(currPayment));
-        this.pService.createPayment(currPayment).subscribe(payment => {
-          console.log('we`ve created payment: ' + payment.toString());
-          this.oService.sendMail(new LocalOrder(currClient, mailText)).subscribe(rLocalOrder => {
-            console.log('we got answer from server: ' + rLocalOrder);
-            CartService.cleanCart();
-            location.reload();
+      this.oService.createOrder(new Order(currClient.clientId, bin.detailsBinId.value, new Date().getTime(), {'Online': ''}))
+        .subscribe(order => {
+          const currPayment = new Payment(order.orderId, true, 'No msg');
+          console.log('we created payment ' + JSON.stringify(currPayment));
+          this.pService.createPayment(currPayment).subscribe(payment => {
+            console.log('we`ve created payment: ' + payment.toString());
+            this.oService.sendMail(new LocalOrder(currClient, mailText)).subscribe(rLocalOrder => {
+              console.log('we got answer from server: ' + rLocalOrder);
+              CartService.cleanCart();
+              location.reload();
+            });
           });
         });
-      });
     });
   }
 }

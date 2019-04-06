@@ -1,5 +1,11 @@
 <ng-container>
-    <div *ngFor="let order of orders">
-      <p>Заказ {{order.orderId.value}}. Оплата: {{order.paymentType.toString()}}. Дата: {{createDate(order.currentDate) | date:'yyyy-MM-dd'}}</p><br>
+    <div *ngFor="let order of extendedOrders">
+      <h3>Заказ {{order.order.orderId.value}}.</h3><br>
+      <ul>
+        <li *ngFor="let detail of order.details">
+          {{detail.name}}
+        </li>
+      </ul>
+      <p>Дата: {{createDate(order.order.currentDate) | date:'yyyy-MM-dd'}}</p><br>
     </div>
 </ng-container>
