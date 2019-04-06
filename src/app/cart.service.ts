@@ -35,14 +35,10 @@ export class CartService {
 
   static removeFromCartLocal(detail: Detail): Boolean {
     const details: Detail[] = JSON.parse(LocalStorageService.get(cartStr));
-
-    const index = details.indexOf(detail, 0);
-    if (index > -1) {
-      details.splice(index, 1);
-    }
+    const updatedDetails = details.filter(currDetail => currDetail.detailId.value !== detail.detailId.value);
 
     CartService.cleanCart();
-    CartService.saveToCartLocal(details);
+    CartService.saveToCartLocal(updatedDetails);
 
     return true;
   }

@@ -18,12 +18,9 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     const client: Client = JSON.parse(LocalStorageService.get('currentUser')) as Client;
     this.oService.getOrders(client.clientId).subscribe((ordersSeq: Order[]) => {
-      console.log(ordersSeq);
       ordersSeq.map(order => {
         const details = [];
-        console.log('working with order: ' + order.orderId);
         this.oService.getDetailBin(order.detailsBinId.value).subscribe(detailBin => {
-          console.log('working with detail bin: ' + detailBin.detailsBinId.value);
           detailBin.detailIds.map(detailId => this.dService.getDetailById(detailId).subscribe(detail => {
             details.push(detail);
           }));

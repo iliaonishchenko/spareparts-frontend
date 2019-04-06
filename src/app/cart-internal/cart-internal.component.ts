@@ -43,7 +43,6 @@ export class CartInternalComponent implements OnInit {
   }
 
   totalSum(): number {
-    console.log('called');
     if (!this.isCartEmpty()) {
       return CartService.getGoodsFromLocalCart().map(detail => detail.price).reduce((p1, p2) => p1 + p2);
     } else {
