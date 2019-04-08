@@ -22,7 +22,12 @@ export class DetailsService {
   }
 
   getDetailById(detailId: DetailId): Observable<Detail> {
+    console.log('sending request');
     return this.http.get<Detail>('/api/details/' + detailId.value);
+  }
+
+  updateDetail(detail: Detail): Observable<Detail> {
+    return this.http.put<Detail>('/api/details', detail);
   }
 }
 

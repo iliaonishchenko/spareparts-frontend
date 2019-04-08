@@ -8,7 +8,12 @@
         <div class="card-text">
           <h4 class="card-title">{{detail.name}}</h4>
           <p>{{detail.info}}</p>
+          <p>Цена: {{detail.price}}</p>
+          <p>Год: {{detail.year}}</p>
           <a href="#" class="btn btn-primary" (click)="addDetailToCart(detail)">Добавить в корзину</a>
+          <div *ngIf="client.isAdmin">
+            <button class="btn btn-lg btn-outline-primary" (click)="openChangeWindow(content, detail)">Изменить деталь</button>
+          </div>
         </div>
       </div>
     </div>
@@ -17,3 +22,33 @@
 
 
 <ng-template #loading><p style="margin: 0 auto">Loading details list...</p></ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Обновить деталь</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="modal-body" [formGroup]="updatedDetailForm">
+    <label>
+      Название
+      <input formControlName="updatedDetailName">
+    </label>
+    <label>
+      Информация
+      <input formControlName="updatedDetailInfo">
+    </label>
+    <label>
+      Цена
+      <input formControlName="updatedDetailPrice">
+    </label>
+    <label>
+      Год
+      <input formControlName="updatedDetailYear">
+    </label>
+  </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateDetail()">Принять изменения</button>
+  </div>
+</ng-template>

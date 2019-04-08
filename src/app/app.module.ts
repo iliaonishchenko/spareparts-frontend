@@ -18,6 +18,8 @@ import {OrdersService} from './orders.service';
 import {PaymentsService} from './payment.service';
 import { OrdersComponent } from './orders/orders.component';
 import { RegistrationComponent } from './registration/registration.component';
+import {NgbModalBackdrop} from '../../node_modules/@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
+import {NgbModule} from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { RegistrationComponent } from './registration/registration.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     routing
   ],
   providers: [CarsService, DetailsService, AuthenticationService, CartService, OrdersService, PaymentsService],
