@@ -1,5 +1,8 @@
 <h4>Детали для автомобиля {{car.model}} {{car.mark}}, {{car.year}} года</h4>
 <img class="img-fluid" src={{car.pic}}/>
+<div *ngIf="client.isAdmin">
+  <a href="#" class="btn btn-primary" (click)="openAddWindow(addNewDetail)">Добавить новую деталь</a>
+</div>
 
 <ng-container *ngIf="isDefined(availableDetails); else loading">
   <div class="row">
@@ -13,6 +16,9 @@
           <a href="#" class="btn btn-primary" (click)="addDetailToCart(detail)">Добавить в корзину</a>
           <div *ngIf="client.isAdmin">
             <button class="btn btn-lg btn-outline-primary" (click)="openChangeWindow(content, detail)">Изменить деталь</button>
+          </div>
+          <div *ngIf="client.isAdmin">
+            <button class="btn btn-danger" (click)="deleteDetail(detail.detailId)">Удалить деталь</button>
           </div>
         </div>
       </div>
@@ -50,5 +56,40 @@
   </form>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="updateDetail()">Принять изменения</button>
+  </div>
+</ng-template>
+
+
+<ng-template #addNewDetail let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-new-detail">Добавить новую деталь</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="modal-body" [formGroup]="addDetailForm">
+    <label>
+      Название
+      <input formControlName="addDetailName">
+    </label>
+    <label>
+      Информация
+      <input formControlName="addDetailInfo">
+    </label>
+    <label>
+      Цена
+      <input formControlName="addDetailPrice">
+    </label>
+    <label>
+      Год
+      <input formControlName="addDetailYear">
+    </label>
+    <label>
+      Код поставщика
+      <input formControlName="addDetailSupplierId">
+    </label>
+  </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addDetail()">Добавить</button>
   </div>
 </ng-template>

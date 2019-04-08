@@ -29,6 +29,14 @@ export class DetailsService {
   updateDetail(detail: Detail): Observable<Detail> {
     return this.http.put<Detail>('/api/details', detail);
   }
+
+  createNewDetail(detail: Detail): Observable<Detail> {
+    return this.http.post<Detail>('/api/details', detail);
+  }
+
+  deleteDetail(detailId: DetailId): Observable<Detail> {
+    return this.http.delete<Detail>('/api/details/' + detailId.value);
+  }
 }
 
 export class DetailBinId {

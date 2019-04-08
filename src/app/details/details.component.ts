@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DetailsService } from '../details.service';
+import {DetailsService, SupplierId} from '../details.service';
 import { Car, CarId } from '../app.component';
 import {LocalStorageService} from '../localstorage.service';
 import {CartService} from '../cart.service';
@@ -22,6 +22,7 @@ export class DetailsComponent implements OnInit {
   closeResult: string;
   currDetail: Detail;
   updatedDetailForm: FormGroup;
+  addDetailForm: FormGroup;
 
   getDetailsByCarId(carId: CarId) {
     this.detailService.getDetailsByCarId(carId).subscribe((detailSeq: Detail[]) => {
@@ -45,6 +46,21 @@ export class DetailsComponent implements OnInit {
 
   addDetailToCart(detail: Detail) {
     CartService.addToCartLocal(detail);
+  }
+
+  openAddWindow(addNewDetail) {
+    this.addDetailForm = new FormGroup({
+        addDetailName: new FormControl(),
+      addDetailInfo: new FormControl(),
+      addDetailPrice: new FormControl(),
+      addDetailYear: new FormControl(),
+      addDetailSupplierId: new FormControl()
+      });
+    this.modalService.open(addNewDetail, {ariaLabelledBy: 'modal-new-detail'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   openChangeWindow(content, detail: Detail) {
@@ -83,17 +99,42 @@ export class DetailsComponent implements OnInit {
     // this.detailService.getDetailsByCarId({'value': 2});
     console.log(this.updatedDetailForm.value.updatedDetailName);
   }
+
+  addDetail() {
+    const supplierId = new SupplierId(this.addDetailForm.value.addDetailSupplierId);
+    const name = this.addDetailForm.value.addDetailName;
+    const info = this.addDetailForm.value.addDetailInfo;
+    const price = this.addDetailForm.value.addDetailPrice;
+    const year = this.addDetailForm.value.addDetailYear;
+    const newDetail = new Detail(supplierId, name, year, info, price, this.car.carId);
+
+    this.detailService.createNewDetail(newDetail).subscribe( justCreatedDetail => console.log(justCreatedDetail));
+  }
+
+  deleteDetail(detailId: DetailId) {
+    this.detailService.deleteDetail(detailId).subscribe(detail => console.log(detail.detailId));
+  }
 }
 
 export interface DetailId {
   value: number;
 }
 
-export interface Detail {
-  detailId: DetailId;
-  supplierId: number;
+export class Detail {
+  detailId?: DetailId;
+  supplierId: SupplierId;
   name: String;
   year: number;
   info: String;
   price: number;
+  carId: CarId;
+
+  constructor(supplierId: SupplierId, name: string, year: number, info: string, price: number, carId: CarId) {
+    this.supplierId = supplierId;
+    this.name = name;
+    this.year = year;
+    this.info = info;
+    this.price = price;
+    this.carId = carId;
+  }
 }
