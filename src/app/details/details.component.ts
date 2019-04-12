@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Directive, Input, OnInit} from '@angular/core';
 import {DetailsService, SupplierId} from '../details.service';
 import { Car, CarId } from '../app.component';
 import {LocalStorageService} from '../localstorage.service';
@@ -6,6 +6,7 @@ import {CartService} from '../cart.service';
 import {Client} from '../orders.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup} from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -50,11 +51,11 @@ export class DetailsComponent implements OnInit {
 
   openAddWindow(addNewDetail) {
     this.addDetailForm = new FormGroup({
-        addDetailName: new FormControl(),
-      addDetailInfo: new FormControl(),
-      addDetailPrice: new FormControl(),
-      addDetailYear: new FormControl(),
-      addDetailSupplierId: new FormControl()
+        addDetailName: new FormControl('', Validators.required),
+      addDetailInfo: new FormControl('', Validators.required),
+      addDetailPrice: new FormControl( '', [Validators.required, Validators.required, Validators.min(1)]),
+      addDetailYear: new FormControl( '', [Validators.required, Validators.required, Validators.min(1950), Validators.max(2020)]),
+      addDetailSupplierId: new FormControl( '', [Validators.required])
       });
     this.modalService.open(addNewDetail, {ariaLabelledBy: 'modal-new-detail'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -63,19 +64,25 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+
+
   openChangeWindow(content, detail: Detail) {
     this.currDetail = detail;
     this.updatedDetailForm = new FormGroup({
-      updatedDetailName: new FormControl(this.currDetail.name),
-      updatedDetailInfo: new FormControl(this.currDetail.info),
-      updatedDetailPrice: new FormControl(this.currDetail.price),
-      updatedDetailYear: new FormControl(this.currDetail.year)
+      updatedDetailName: new FormControl(this.currDetail.name, Validators.required),
+      updatedDetailInfo: new FormControl(this.currDetail.info, Validators.required),
+      updatedDetailPrice: new FormControl(this.currDetail.price, [Validators.required, Validators.min(1)]),
+      updatedDetailYear: new FormControl(this.currDetail.year, [Validators.required, Validators.min(1950), Validators.max(2020)])
     });
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  get changingDetailName () {
+    return this.updatedDetailForm.get('updatedDetailName');
   }
 
   private getDismissReason(reason: any): string {
@@ -98,6 +105,7 @@ export class DetailsComponent implements OnInit {
     // this.detailService.getDetailById(this.currDetail.detailId);
     // this.detailService.getDetailsByCarId({'value': 2});
     console.log(this.updatedDetailForm.value.updatedDetailName);
+    location.reload();
   }
 
   addDetail() {
@@ -109,10 +117,12 @@ export class DetailsComponent implements OnInit {
     const newDetail = new Detail(supplierId, name, year, info, price, this.car.carId);
 
     this.detailService.createNewDetail(newDetail).subscribe( justCreatedDetail => console.log(justCreatedDetail));
+    location.reload();
   }
 
   deleteDetail(detailId: DetailId) {
     this.detailService.deleteDetail(detailId).subscribe(detail => console.log(detail.detailId));
+    location.reload();
   }
 }
 

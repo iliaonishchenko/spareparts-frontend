@@ -36,26 +36,35 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form class="modal-body" [formGroup]="updatedDetailForm">
+  <form class="modal-body" style="display: table-column; width:100%;" [formGroup]="updatedDetailForm">
+    <div class="form-group">
     <label>
       Название
-      <input formControlName="updatedDetailName">
+      <input name="name" required formControlName="updatedDetailName">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="updatedDetailForm.get('updatedDetailName').invalid && (updatedDetailForm.get('updatedDetailName').dirty)">Введите название детали</p>
+    <br>
     <label>
       Информация
-      <input formControlName="updatedDetailInfo">
+      <input name="info" required formControlName="updatedDetailInfo">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="updatedDetailForm.get('updatedDetailInfo').invalid && (updatedDetailForm.get('updatedDetailInfo').dirty)">Введите описание детали</p>
+    <br>
     <label>
       Цена
-      <input formControlName="updatedDetailPrice">
+      <input name="price" min="0" required formControlName="updatedDetailPrice">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="updatedDetailForm.get('updatedDetailPrice').invalid && (updatedDetailForm.get('updatedDetailPrice').dirty)">Введите корректную цену</p>
+    <br>
     <label>
       Год
-      <input formControlName="updatedDetailYear">
+      <input name="year" min="1950" max="2019" required formControlName="updatedDetailYear">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="updatedDetailForm.get('updatedDetailYear').invalid && (updatedDetailForm.get('updatedDetailYear').dirty)">Введите корректный год</p>
+    </div>
   </form>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="updateDetail()">Принять изменения</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]="!updatedDetailForm.valid" (click)="updateDetail()">Принять изменения</button>
   </div>
 </ng-template>
 
@@ -70,26 +79,35 @@
   <form class="modal-body" [formGroup]="addDetailForm">
     <label>
       Название
-      <input formControlName="addDetailName">
+      <input id="name" required formControlName="addDetailName">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailName').invalid && (addDetailForm.get('addDetailName').dirty)">Введите название детали</p>
+    <br>
     <label>
       Информация
-      <input formControlName="addDetailInfo">
+      <input name="info" required formControlName="addDetailInfo">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailInfo').invalid && (addDetailForm.get('addDetailInfo').dirty)">Введите описание детали</p>
+    <br>
     <label>
       Цена
-      <input formControlName="addDetailPrice">
+      <input name="price" min="0" required formControlName="addDetailPrice">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailPrice').invalid && (addDetailForm.get('addDetailPrice').dirty)">Введите корректную цену</p>
+    <br>
     <label>
       Год
-      <input formControlName="addDetailYear">
+      <input name="year" min="1950" max="2019" required formControlName="addDetailYear">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailYear').invalid && (addDetailForm.get('addDetailYear').dirty)">Введите корректный год</p>
+    <br>
     <label>
       Код поставщика
-      <input formControlName="addDetailSupplierId">
+      <input id="supplierId" required formControlName="addDetailSupplierId">
     </label>
+    <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailSupplierId').invalid && (addDetailForm.get('addDetailSupplierId').dirty)">Введите идентификатор существующего поставщика</p>
   </form>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="addDetail()">Добавить</button>
+    <button  type="button" class="btn btn-outline-dark" [disabled]="!addDetailForm.valid" (click)="addDetail()">Добавить</button>
   </div>
 </ng-template>
