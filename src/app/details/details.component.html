@@ -106,6 +106,33 @@
       <input id="supplierId" required formControlName="addDetailSupplierId">
     </label>
     <p style="color:#ff0913" class="error_message" *ngIf="addDetailForm.get('addDetailSupplierId').invalid && (addDetailForm.get('addDetailSupplierId').dirty)">Введите идентификатор существующего поставщика</p>
+    <p>
+      <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Показать список поставщиков
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <ul class="list-group">
+          <li class="list-group-item">Renault                1</li>
+          <li class="list-group-item">Vite                   2</li>
+          <li class="list-group-item">Kortech                3</li>
+          <li class="list-group-item">ADR                    4</li>
+          <li class="list-group-item">NiBK                   5</li>
+          <li class="list-group-item">Vkt                    6</li>
+          <li class="list-group-item">Torque                 7</li>
+          <li class="list-group-item">Automotor France       8</li>
+          <li class="list-group-item">БелМаг                 9</li>
+          <li class="list-group-item">Febi                   10</li>
+          <li class="list-group-item">Bosch                  11</li>
+          <li class="list-group-item">Valeo                  12</li>
+          <li class="list-group-item">Textar                 13</li>
+          <li class="list-group-item">ELF Evolution          14</li>
+          <li class="list-group-item">Castrol                15</li>
+          <li class="list-group-item">Citroen/Peugeot        16</li>
+        </ul>
+      </div>
+    </div>
   </form>
   <div class="modal-footer">
     <button  type="button" class="btn btn-outline-dark" [disabled]="!addDetailForm.valid" (click)="addDetail()">Добавить</button>
