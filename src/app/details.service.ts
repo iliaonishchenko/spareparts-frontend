@@ -27,6 +27,7 @@ export class DetailsService {
   }
 
   updateDetail(detail: Detail): Observable<Detail> {
+    // console.log("we want to update this detail");
     return this.http.put<Detail>('/api/details', detail);
   }
 

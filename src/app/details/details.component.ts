@@ -101,11 +101,13 @@ export class DetailsComponent implements OnInit {
     this.currDetail.price = this.updatedDetailForm.value.updatedDetailPrice;
     this.currDetail.year = this.updatedDetailForm.value.updatedDetailYear;
 
-    this.detailService.updateDetail(this.currDetail).subscribe(updatedDetail => this.currDetail = updatedDetail);
+    this.detailService.updateDetail(this.currDetail).subscribe(updatedDetail => {
+      this.currDetail = updatedDetail;
+      location.reload();
+    });
     // this.detailService.getDetailById(this.currDetail.detailId);
     // this.detailService.getDetailsByCarId({'value': 2});
     console.log(this.updatedDetailForm.value.updatedDetailName);
-    location.reload();
   }
 
   addDetail() {
@@ -116,8 +118,10 @@ export class DetailsComponent implements OnInit {
     const year = this.addDetailForm.value.addDetailYear;
     const newDetail = new Detail(supplierId, name, year, info, price, this.car.carId);
 
-    this.detailService.createNewDetail(newDetail).subscribe( justCreatedDetail => console.log(justCreatedDetail));
-    location.reload();
+    this.detailService.createNewDetail(newDetail).subscribe(justCreatedDetail => {
+      console.log(justCreatedDetail);
+      location.reload();
+    });
   }
 
   deleteDetail(detailId: DetailId) {
